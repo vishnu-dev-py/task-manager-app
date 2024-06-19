@@ -78,13 +78,22 @@ class TaskManager:
             print("Invalid priority. Valid options are: High, Medium, Low.")
             return
 
-        filtered_tasks = [task for task in self.tasks if task.priority == priority]
+        # filtered_tasks = [task for task in self.tasks if task.priority == priority]
+        filtered_tasks = []
+        for task in self.tasks:
+            if task.priority == priority:
+                filtered_tasks.append(task)
+
         if not filtered_tasks:
             print(f"No tasks found with priority '{priority}'.")
         for task in filtered_tasks:
             print(task)
 
+
 if __name__ == "__main__":
+
+    task_manager = TaskManager()
+
     while True:
         print("1. Add Task")
         print("2. Edit Task")
@@ -94,3 +103,36 @@ if __name__ == "__main__":
         print("6. Exit")
 
         choice = input("Enter your choice (1-6)")
+
+        if choice == '1':
+            title = input("Enter task title: ")
+            description = input("Enter task description: ")
+            priority = input("Enter task priority (High/Medium/Low): ")
+            status = input("Enter task status (Pending/In Progress/Completed): ")
+            task_manager.add_task(title, description, priority, status)
+
+        elif choice == '2':
+            try:
+                task_id = int(input("Enter task ID to edit: "))
+                title = input("Enter new title (leave blank to keep existing): ")
+                description = input("Enter new description (leave blank to keep existing): ")
+                priority = input("Enter new priority (leave blank to keep existing): ")
+                status = input("Enter new status (leave blank to keep existing): ")
+                task_manager.edit_task(task_id, title, description, priority, status)
+            except ValueError:
+                print("Invalid Task ID. Please enter a Valid Task ID.")
+        elif choice == '3':
+            try:
+                task_id = int(input("Enter task ID to delete: "))
+                task_manager.delete_task(task_id)
+            except ValueError:
+                print("Invalid Task ID. Please enter a Valid Task ID.")
+        elif choice == '4':
+            task_manager.view_all_tasks()
+        elif choice == '5':
+            priority = input("Enter priority to filter by (High/Medium/Low): ")
+            task_manager.filter_tasks_by_priority(priority)
+        elif choice == '6':
+            break
+        else:
+            print("Invalid choice. Please try again.")
