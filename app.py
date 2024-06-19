@@ -1,3 +1,16 @@
+class Task:
+    def __init__(self, task_id, title, description, priority, status):
+        self.id = task_id
+        self.title = title
+        self.description = description
+        self.priority = priority
+        self.status = status
+
+    def __str__(self):
+        return ("Task ID: {}, Title: {}, Description: {}, Priority: {}, Status: {}"
+                .format(self.id,self.title, self.description,self.priority,self.status))
+
+
 if __name__ == "__main__":
     while True:
         print("\nTask Manager Menu:")
